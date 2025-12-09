@@ -1,0 +1,506 @@
+Build a next-gen, ultra-premium, fully functional, production-ready Hostel Management System FRONTEND ONLY using:
+
+TECH STACK
+- React + TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Framer Motion
+- React Three Fiber / Three.js (subtle depth only)
+- Recharts for analytics
+- Axios-ready API layer (no real backend calls)
+
+STRICT DOMAIN MODEL
+- Hostel consists of EXACTLY 4 blocks:
+  - Block A
+  - Block B
+  - Block C
+  - Block D
+- Each block has EXACTLY 1 dedicated warden.
+- Admin manages all 4 blocks and all wardens.
+- Each student belongs to:
+  - ONE block
+  - ONE room
+- Each warden can access ONLY their own block’s data.
+- Attendance can be marked ONLY by the respective block warden.
+
+STUDENT ID RULE (VERY IMPORTANT)
+- When Admin registers a student, the system MUST:
+  - Auto-generate a unique Student ID Number (example: HSTL2025A001)
+  - Store and display this Student ID EVERYWHERE:
+    - Student tables
+    - Search
+    - Filters
+    - Profile drawer
+    - Attendance lists
+    - Fee records
+    - Visitor logs
+    - Complaint details
+- Student ID must be the PRIMARY identifier in UI.
+
+DESIGN GOAL
+- Premium SaaS-level UI
+- Dark-first luxury theme
+- Glassmorphism with solid readable surfaces
+- NO fully transparent forms or modals
+- Smooth Framer Motion animations
+- Soft 3D depth only (NO gaming style)
+- Fully responsive & mobile optimized
+
+ROLES & ACCESS (STRICT RBAC)
+- Admin → Full control
+- Warden → Block-level control only
+- Student → Personal access only
+Each role MUST be technically restricted in UI navigation and actions.
+
+================================================
+1. AUTHENTICATION SYSTEM
+================================================
+- Role-based login selector: Admin / Warden / Student
+- Floating label inputs
+- Animated validation errors
+- Protected routes + role guards
+- Auto-route after login:
+  - Admin → Admin dashboard
+  - Warden → Warden dashboard (own block)
+  - Student → Student dashboard (own data)
+
+================================================
+2. GLOBAL LAYOUT
+================================================
+- Collapsible animated sidebar (role-based menu)
+- Floating top navbar
+- User avatar dropdown
+- Dark/light toggle
+- Framer Motion page transitions
+- Subtle Three.js background motion
+- All content panels MUST use solid/semi-opaque backgrounds (NO invisible forms)
+
+================================================
+3. ADMIN MODULE – FULL SYSTEM CONTROL
+================================================
+Admin Dashboard (NO hero / no "get started" screen):
+KPIs:
+- Total Students
+- Total Rooms
+- Available Beds
+- Pending Fees
+- Today’s Attendance %
+- Visitor Count Today
+- Active Leave Requests
+- Open Complaints (new/pending)
+
+Block Overview:
+- Block A / B / C / D
+- Students count
+- Rooms count
+- Assigned warden name + mobile
+
+Charts:
+- Monthly Attendance
+- Monthly Fee Collection
+- Room Occupancy Trend
+- Visitor Trend
+- Complaint trend (optional count per month)
+
+-----------------------------
+WARDEN MANAGEMENT (ADMIN)
+-----------------------------
+Admin can:
+- Add warden
+- Edit warden
+- Assign each warden to ONLY ONE block
+Warden Table:
+- Name
+- Email
+- Mobile Number
+- Block Assigned
+
+-----------------------------
+STUDENT MANAGEMENT (ADMIN)
+-----------------------------
+Admin can:
+- Add Student
+- Generate Student ID automatically
+- Allocate Room
+- Change Room
+- Remove Student from Hostel (Deactivate + Free Room)
+
+Student Registration Form MUST Collect:
+- Full Name
+- Email
+- Student Mobile Number
+- Parent/Guardian Mobile Number
+- Address
+- Block (A/B/C/D)
+- Admission Date
+- Optional Initial Room
+- Document Upload (UI only)
+
+Student Table Columns:
+- Student ID
+- Name
+- Block
+- Room
+- Student Mobile
+- Parent Mobile
+- Fee Status
+- Attendance %
+- Status (Active / Removed)
+
+Search & Filters MUST Work Using:
+- Student ID
+- Name
+- Block
+- Room
+- Fee Status
+
+Student Profile Drawer:
+- Student ID
+- Room & Block
+- Warden Name + Mobile
+- Fee Summary
+- Attendance Summary
+- Leave History
+- Complaint count (optional)
+- Student & Parent Contact
+
+-----------------------------
+ROOM MANAGEMENT (ADMIN)
+-----------------------------
+Admin can:
+- Create Rooms per Block
+- Define Room Capacity
+- Assign / Remove Students
+Room Table:
+- Block
+- Room Number
+- Capacity
+- Occupied
+- Available
+All room creation & assignment forms MUST be clearly visible (NOT transparent).
+
+-----------------------------
+FEES MANAGEMENT (ADMIN)
+-----------------------------
+Admin can:
+- Set TOTAL hostel fee
+- Assign fee to students
+- Track Paid / Pending
+- Filter by Block, Due Date, Status
+- Export Financial Reports
+- Download Fee Receipts (UI)
+
+-----------------------------
+MESS MANAGEMENT (ADMIN)
+-----------------------------
+Admin can:
+- Create Weekly Mess Menu
+- Breakfast / Lunch / Dinner for each day
+- Edit & Publish Menu
+Mess Menu MUST be visible to:
+- Admin
+- All Wardens
+- All Students
+
+-----------------------------
+VISITOR MANAGEMENT (ADMIN ONLY CREATES)
+-----------------------------
+Admin can:
+- Register Visitor Check-in
+- Mark Visitor Check-out
+- Assign Visitor to Student by Student ID
+Visitor Table:
+- Visitor Name
+- Student ID
+- Student Name
+- Block
+- In-Time
+- Out-Time
+- Purpose
+
+Wardens & Students = READ ONLY
+
+-----------------------------
+COMPLAINT MANAGEMENT (ADMIN VIEW & ACTION)
+-----------------------------
+Complaint flow:
+- Complaints can be created ONLY by students.
+- Complaints are visible ONLY to Admin (not to wardens).
+
+Admin can:
+- View all complaints from all students
+- Filter by:
+  - Status (New / In Progress / Resolved)
+  - Block
+  - Priority (if added)
+  - Student ID
+- See complaint details:
+  - Complaint ID (UI-generated)
+  - Student ID
+  - Student Name
+  - Block & Room
+  - Student Mobile
+  - Complaint category (e.g., Mess, Room, Cleanliness, Safety, Other)
+  - Complaint title
+  - Complaint description
+  - Date & time
+  - Status (New / In Progress / Resolved)
+- Update complaint status:
+  - Change from New → In Progress → Resolved
+- Optionally add an internal admin note (UI only)
+
+Complaint Table Columns:
+- Complaint ID
+- Student ID
+- Student Name
+- Block
+- Category
+- Title (short)
+- Status
+- Created At
+
+Clicking a complaint opens a detailed drawer with all info and student profile link.
+
+-----------------------------
+NOTIFICATIONS (ADMIN)
+-----------------------------
+Admin can send notifications to:
+- All Students
+- Block A Students
+- Block B Students
+- Block C Students
+- Block D Students
+- All Wardens
+- Individual Block Wardens
+
+Notification history with filters.
+
+-----------------------------
+SYSTEM SETTINGS (ADMIN)
+-----------------------------
+- Manage Admin & Warden users
+- Hostel Rules Config
+- Data Export (UI only)
+
+================================================
+4. WARDEN MODULE – BLOCK LEVEL ONLY
+================================================
+Rules:
+- Warden sees ONLY their block.
+- Warden CANNOT create Visitors.
+- Warden CANNOT create Students or Rooms.
+- Warden CANNOT create Mess Menu.
+- Warden CANNOT see any complaints (complaints are Admin-only).
+
+Warden Dashboard:
+- Block Name
+- Total Students
+- Rooms
+- Present Today
+- Absent Today
+- Pending Attendance
+- Active Leaves
+- Today’s Visitors (READ ONLY)
+
+-----------------------------
+ATTENDANCE (WARDEN ONLY)
+-----------------------------
+- Warden marks attendance ONLY for students in their block
+- Present / Absent toggle
+- Bulk submit
+- Search by:
+  - Student ID
+  - Name
+  - Room
+
+-----------------------------
+LEAVE APPROVAL (WARDEN)
+-----------------------------
+- Approve / Reject Leave
+- Block-wise Leave Calendar
+
+-----------------------------
+VISITOR VIEW (READ ONLY)
+-----------------------------
+- Visitor Name
+- Student ID
+- Student Name
+- In/Out Time
+- Purpose
+
+-----------------------------
+STUDENT SEARCH (WARDEN)
+-----------------------------
+- Search by Student ID, Name, Room
+- View Contacts:
+  - Student Mobile
+  - Parent Mobile
+
+-----------------------------
+MESS MENU (WARDEN)
+-----------------------------
+- Read-only weekly mess menu
+
+-----------------------------
+WARDEN NOTIFICATIONS
+-----------------------------
+Warden can send notifications ONLY to:
+- All students in their own block
+- Selected rooms in their block
+- Selected students in their block
+
+================================================
+5. STUDENT MODULE – PERSONAL ACCESS ONLY
+================================================
+Student Dashboard:
+
+-----------------------------
+ROOM INFO
+-----------------------------
+- Student ID
+- Block
+- Room
+- Floor
+- Bed Number
+- Roommates
+- Warden Name + Mobile
+
+-----------------------------
+FEE STATUS
+-----------------------------
+- Total Fee
+- Paid
+- Pending
+- Due Date
+- Receipt Download
+
+-----------------------------
+ATTENDANCE
+-----------------------------
+- Today’s Status
+- Monthly Percentage
+- Total Leaves
+
+-----------------------------
+LEAVES
+-----------------------------
+- Apply Leave
+- Track Approval / Rejection
+- History
+
+-----------------------------
+VISITOR HISTORY (READ ONLY)
+-----------------------------
+- Visitor Name
+- Date / Time
+- Purpose
+
+-----------------------------
+MESS MENU (READ ONLY)
+-----------------------------
+- Today’s Meals
+- Weekly Menu
+
+-----------------------------
+NOTIFICATIONS
+-----------------------------
+- Fee Alerts
+- Admin Announcements
+- Warden Block Announcements
+- Leave Updates
+- Visitor Alerts
+
+-----------------------------
+PROFILE
+-----------------------------
+- Student Mobile
+- Parent Mobile
+- Address
+- Documents (UI only)
+
+-----------------------------
+COMPLAINT MANAGEMENT (STUDENT)
+-----------------------------
+Student can:
+- Create a complaint:
+  - Complaint category (Mess / Room / Cleanliness / Safety / Other)
+  - Title
+  - Description
+- Automatically link complaint to:
+  - Student ID
+  - Block
+  - Room
+- View their own complaint list with:
+  - Complaint ID
+  - Category
+  - Title
+  - Status (New / In Progress / Resolved)
+  - Created At
+- Track status updates made by Admin.
+
+❌ Students cannot see complaints of others.
+❌ Students cannot edit complaints after submission (optional: allow edit only while status = New).
+
+-----------------------------
+FEE PAYMENT UI
+-----------------------------
+- Status Screen
+- Receipt Preview
+(NO PAYMENT GATEWAY)
+
+================================================
+6. COMPONENT BEHAVIOR REQUIREMENTS
+================================================
+- Every table must support:
+  - Pagination
+  - Search
+  - Filters
+- All modals must:
+  - Be readable
+  - Have solid backgrounds
+  - Be fully functional in UI logic
+- All actions must:
+  - Update UI state instantly
+  - Be backend-ready
+- All forms must:
+  - Validate
+  - Show errors
+  - Prevent blank submissions
+
+================================================
+7. FRONTEND ARCHITECTURE (BACKEND READY)
+================================================
+- API service layer:
+  /services/authService.ts
+  /services/studentService.ts
+  /services/wardenService.ts
+  /services/roomService.ts
+  /services/feeService.ts
+  /services/attendanceService.ts
+  /services/visitorService.ts
+  /services/notificationService.ts
+  /services/complaintService.ts
+- All API calls should be mocked with promises.
+- Clean DTO-based request/response typing.
+- No hardcoded logic inside components.
+
+================================================
+8. FINAL OUTPUT
+================================================
+Generate:
+- Fully functional multi-role UI
+- Student ID system implemented everywhere
+- Correct Admin / Warden / Student access rules
+- Attendance locked strictly to wardens
+- Visitor creation locked strictly to Admin
+- Complaint system:
+  - Students can create & track their own complaints
+  - Admin can view, filter, and update all complaints
+  - Wardens cannot access complaints
+- Mess menu visible to all
+- Notifications fully functional with targeting
+- All search, filters & actions working in UI state
+- Fully responsive
+- Production-quality code only
+
+DELIVER A COMPLETE ENTERPRISE-GRADE HOSTEL MANAGEMENT SYSTEM FRONTEND THAT IS 100% BACKEND-READY.

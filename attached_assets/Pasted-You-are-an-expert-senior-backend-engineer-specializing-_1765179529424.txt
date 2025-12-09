@@ -1,0 +1,396 @@
+You are an expert senior backend engineer specializing in production-grade SaaS systems with Node.js, MongoDB, and RBAC security.
+
+I already have a COMPLETE FRONTEND built using:
+
+React + TypeScript
+
+Vite
+
+Tailwind CSS
+
+shadcn/ui
+
+React Query
+
+Axios
+
+Framer Motion
+
+Recharts
+
+The frontend is final and correct.
+Your task is to:
+
+✅ Build a COMPLETE, PRODUCTION-READY BACKEND
+✅ Integrate it perfectly with my existing frontend
+✅ Use MongoDB ONLY (NO in-memory storage)
+✅ Ensure ZERO API mismatches
+✅ Deliver final run instructions
+
+✅ TECH STACK (MANDATORY)
+
+Node.js + Express.js
+
+TypeScript
+
+MongoDB + Mongoose
+
+JWT Authentication (Access + Refresh Tokens)
+
+Bcrypt Password Hashing
+
+Role-Based Access Control (RBAC)
+
+REST API Architecture
+
+Zod or Joi Validation
+
+Centralized Error Handling
+
+MVC + Service + Repository Architecture
+
+Environment Variable Config
+
+Fully Cloud Deployable
+
+✅ STRICT HOSTEL DOMAIN RULES (NON-NEGOTIABLE)
+
+Hostel has EXACTLY 4 blocks:
+
+Block A
+
+Block B
+
+Block C
+
+Block D
+
+Each block has ONLY ONE WARDEN
+
+Admin controls ALL wardens and ALL blocks
+
+Each student belongs to:
+
+✅ ONE block
+
+✅ ONE room
+
+Wardens can access ONLY their own block
+
+Attendance is marked ONLY by the block warden
+
+Visitors can be created ONLY by Admin
+
+Mess menu created ONLY by Admin, visible to ALL
+
+Complaints created ONLY by Students, visible ONLY to Admin
+
+✅ STUDENT ID SYSTEM (CRITICAL)
+
+When Admin creates a student:
+
+Auto-generate Student ID in format:
+
+HSTL2025A001
+
+
+HSTL → Fixed prefix
+
+2025 → Year
+
+A → Block
+
+001 → Auto-increment per block per year
+
+✅ Student ID is the PRIMARY IDENTIFIER for:
+
+Students
+
+Attendance
+
+Fees
+
+Visitors
+
+Complaints
+
+Search & Filters
+
+Reports
+
+✅ Must be:
+
+Unique
+
+Indexed in MongoDB
+
+✅ STUDENT CREATION + ROOM ASSIGNMENT (NEW REQUIREMENT)
+
+✅ When Admin adds a student, the form must:
+
+Collect student details
+
+Auto-generate Student ID
+
+Assign the room at the SAME TIME
+
+Update room occupancy automatically
+
+✅ ROLES & ACCESS (STRICT RBAC)
+
+ADMIN → Full system access
+
+WARDEN → Own block ONLY
+
+STUDENT → Own data ONLY
+
+✅ AUTH SYSTEM (JWT)
+
+Access Token + Refresh Token
+
+Secure bcrypt password hashing
+
+Middleware:
+
+requireAuth
+
+requireAdmin
+
+requireWarden
+
+requireStudent
+
+requireBlockOwnership
+
+Auth Routes:
+
+POST /api/auth/login
+POST /api/auth/logout
+POST /api/auth/refresh
+GET  /api/auth/me
+
+✅ DATABASE MODELS (MONGOOSE)
+
+Create schemas for:
+
+1️⃣ Admin
+2️⃣ Warden (1 per block enforced)
+3️⃣ Student (studentId indexed unique)
+4️⃣ Room
+5️⃣ Attendance
+6️⃣ Fees
+7️⃣ Leave
+8️⃣ Visitor
+9️⃣ MessMenu
+🔟 Notification
+1️⃣1️⃣ Complaint
+
+(All exactly as defined previously with strict references and indexes.)
+
+✅ ADMIN MODULE APIs
+POST   /api/admin/students     ✅ Assign room during creation
+GET    /api/admin/students
+GET    /api/admin/students/:studentId
+PATCH  /api/admin/students/:studentId
+DELETE /api/admin/students/:studentId
+
+
+✅ Auto Student ID
+✅ Auto Room Assignment
+✅ Free room on removal
+
+✅ Wardens:
+
+POST   /api/admin/wardens
+GET    /api/admin/wardens
+PATCH  /api/admin/wardens/:id
+DELETE /api/admin/wardens/:id
+
+
+✅ Rooms:
+
+POST   /api/admin/rooms
+GET    /api/admin/rooms
+PATCH  /api/admin/rooms/:id
+DELETE /api/admin/rooms/:id
+
+
+✅ Fees:
+
+POST   /api/admin/fees
+GET    /api/admin/fees
+PATCH  /api/admin/fees/:studentId
+
+
+✅ Mess Menu:
+
+POST /api/admin/mess
+GET  /api/mess   ✅ visible to all
+
+
+✅ Visitors (ADMIN ONLY):
+
+POST   /api/admin/visitors
+GET    /api/admin/visitors
+PATCH  /api/admin/visitors/:id/checkout
+
+
+✅ Notifications (ADMIN):
+
+POST /api/admin/notifications
+GET  /api/notifications
+
+
+Targets:
+
+All Students
+
+Block A/B/C/D
+
+All Wardens
+
+Individual Wardens
+
+✅ Complaints (ADMIN VIEW):
+
+GET   /api/admin/complaints
+PATCH /api/admin/complaints/:id
+
+✅ WARDEN MODULE APIs
+GET   /api/warden/dashboard
+GET   /api/warden/students
+POST  /api/warden/attendance
+GET   /api/warden/attendance
+PATCH /api/warden/leaves/:id
+GET   /api/warden/visitors
+POST  /api/warden/notifications
+
+
+✅ Only their block
+✅ Attendance strictly locked
+
+✅ STUDENT MODULE APIs (FULL PANEL SUPPORT)
+
+✅ Student must be able to:
+
+Fetch attendance
+
+Fetch room details
+
+Fetch warden details
+
+Fetch fee details
+
+File complaints
+
+View complaints
+
+GET   /api/student/me
+GET   /api/student/attendance
+GET   /api/student/fees
+POST  /api/student/leaves
+GET   /api/student/leaves
+GET   /api/student/visitors
+GET   /api/student/mess
+POST  /api/student/complaints
+GET   /api/student/complaints
+
+
+✅ All routes must return clean JSON for React Query
+✅ No frontend crashes due to mismatched data
+
+✅ VALIDATION & ERROR HANDLING
+
+Zod / Joi for:
+
+Login
+
+Student creation
+
+Attendance
+
+Complaints
+
+Centralized error handler:
+
+{
+  "success": false,
+  "message": "Error Message"
+}
+
+
+Success:
+
+{
+  "success": true,
+  "data": ...
+}
+
+✅ BACKEND FOLDER STRUCTURE
+/backend
+  /src
+    /config
+    /models
+    /controllers
+    /services
+    /routes
+    /middleware
+    /validators
+    /utils
+    server.ts
+
+✅ .ENV FILE (MANDATORY)
+PORT=5000
+NODE_ENV=development
+
+MONGODB_URI=mongodb+srv://client001:client001@cluster0.pctliec.mongodb.net/hostel_management?retryWrites=true&w=majority&appName=Cluster0
+
+JWT_SECRET=super_secure_secret
+JWT_REFRESH_SECRET=super_secure_refresh_secret
+JWT_EXPIRE=15m
+JWT_REFRESH_EXPIRE=7d
+BCRYPT_SALT_ROUNDS=12
+
+CLIENT_URL=http://localhost:5173
+
+✅ FRONTEND INTEGRATION (MANDATORY)
+
+Axios base URL:
+
+http://localhost:5000/api
+
+
+React Query must receive:
+
+Pagination
+
+Filters
+
+Student ID search
+
+No 404 / 500 API mismatches
+
+✅ FINAL EXPECTED OUTCOME
+
+✅ 100% Production-Ready Backend
+✅ Perfect Frontend Integration
+✅ Student Dashboard Fully Working
+✅ Room Auto-Assigned During Student Creation
+✅ Notifications Working
+✅ Complaints Working
+✅ Attendance Secure
+✅ MongoDB Only
+✅ Zero Mock Storage
+
+✅ FINAL RUN INSTRUCTIONS (MANDATORY TO OUTPUT)
+cd backend
+npm install
+cp .env.example .env
+npm run dev
+
+
+Frontend:
+
+cd frontend
+npm install
+npm run dev
