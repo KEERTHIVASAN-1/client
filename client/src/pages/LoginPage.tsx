@@ -41,16 +41,16 @@ export default function LoginPage() {
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: roleCredentials.admin.email,
-      password: roleCredentials.admin.password,
+      email: "",
+      password: "",
     },
   });
 
   const handleRoleChange = (role: string) => {
     setSelectedRole(role as UserRole);
     setError(null);
-    form.setValue("email", roleCredentials[role as UserRole].email);
-    form.setValue("password", roleCredentials[role as UserRole].password);
+    form.setValue("email","");
+    form.setValue("password", "");
   };
 
   const onSubmit = async (data: LoginFormData) => {
@@ -210,16 +210,7 @@ export default function LoginPage() {
               </div>
             </form>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-6 p-4 rounded-lg bg-muted/50"
-            >
-              <p className="text-xs text-muted-foreground text-center">
-                {roleCredentials[selectedRole].hint}
-              </p>
-            </motion.div>
+            
           </CardContent>
         </Card>
       </motion.div>

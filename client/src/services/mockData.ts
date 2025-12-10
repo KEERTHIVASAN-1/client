@@ -75,8 +75,7 @@ blocks.forEach((block) => {
       createdAt: "2024-08-01",
     });
   }
-  console.log("Sample student login:");
-  console.log(mockStudents.find(s => s.status === "active")?.email);
+  
 
 });
 
