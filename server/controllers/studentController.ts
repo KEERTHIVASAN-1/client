@@ -177,16 +177,32 @@ export const createStudent = async (req: AuthRequest, res: Response): Promise<vo
 
     if (roomId) {
       const room = await Room.findById(roomId);
-      if (room) {
-        if (room.occupied >= room.capacity) {
-          await User.findByIdAndDelete(user._id);
-          errorResponse(res, "Room is at full capacity", 400);
-          return;
-        }
-        roomNumber = room.roomNumber;
-        bedNumber = room.occupied + 1;
-        await Room.findByIdAndUpdate(roomId, { $inc: { occupied: 1 } });
+      if (!room) {
+        await User.findByIdAndDelete(user._id);
+        errorResponse(res, "Room not found", 404);
+        return;
       }
+
+      const occupants = await Student.find({ roomId: room._id, status: "active" }).select("bedNumber _id");
+      const usedBeds = new Set<number>(occupants.map((s) => s.bedNumber!).filter((n) => typeof n === "number"));
+
+      let finalBedNumber: number | undefined = undefined;
+      for (let i = 1; i <= room.capacity; i++) {
+        if (!usedBeds.has(i)) {
+          finalBedNumber = i;
+          break;
+        }
+      }
+
+      if (!finalBedNumber) {
+        await User.findByIdAndDelete(user._id);
+        errorResponse(res, "Room is at full capacity", 400);
+        return;
+      }
+
+      roomNumber = room.roomNumber;
+      bedNumber = finalBedNumber;
+      await Room.findByIdAndUpdate(roomId, { $inc: { occupied: 1 } });
     }
 
     const student = new Student({
